@@ -1,6 +1,6 @@
 ---
 
-name: terraform
+name: terraform-deployment
 
 on:
   push:
