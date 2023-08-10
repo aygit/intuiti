@@ -49,9 +49,8 @@ jobs:
 
       - name: terraform Plan
         id: plan
-        #run: 'terraform plan -var-file="terraf/terraform.tfvars" -out=out.tfplan'
         run: terraform plan -var-file="terraform.tfvars" 
-       # working-directory: terraf
+        working-directory: terraform
         env:
            ARM_CLIENT_ID: ${{ secrets.client_id }}
            ARM_SUBSCRIPTION_ID: ${{ secrets.subscription_id }}
@@ -60,7 +59,6 @@ jobs:
  
       - name: terraform apply
         id: apply
-      #  working-directory: terraf
         run: 'terraform apply -auto-approve'
         env:
            ARM_CLIENT_ID: ${{ secrets.client_id }}
