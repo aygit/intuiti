@@ -1,0 +1,76 @@
+---
+
+name: terraform
+
+#on:
+#  push:
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+    name: packer
+
+    defaults:
+     run:
+      working-directory: terraf
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+      - run: env
+      
+     # - name: list files
+     #   run:  |
+      #    cd terraf
+
+
+
+      - name: verify terraform version
+        run: terraform --version
+     
+      - name: verify terraform formatting
+        id: fmt
+        run: terraform fmt 
+        continue-on-error: false
+
+      - name: initialize terraform and upgrade modules
+        id: init
+        run: terraform init -upgrade=true
+       # working-directory: terraf
+        env: 
+          ARM_CLIENT_ID: ${{ secrets.client_id }}
+          ARM_SUBSCRIPTION_ID: ${{ secrets.subscription_id }}
+          ARM_TENANT_ID: ${{ secrets.tenant_id }}
+          ARM_CLIENT_SECRET: ${{ secrets.client_secret }}
+
+      - name: validate terraform code
+        id: validate
+        run: terraform validate
+
+      - name: terraform Plan
+        id: plan
+        #run: 'terraform plan -var-file="terraf/terraform.tfvars" -out=out.tfplan'
+        run: terraform plan 
+       # working-directory: terraf
+        env:
+           ARM_CLIENT_ID: ${{ secrets.client_id }}
+           ARM_SUBSCRIPTION_ID: ${{ secrets.subscription_id }}
+           ARM_TENANT_ID: ${{ secrets.tenant_id }}
+           ARM_CLIENT_SECRET: ${{ secrets.client_secret }}
+ 
+      - name: terraform apply
+        id: apply
+      #  working-directory: terraf
+        run: 'terraform apply -auto-approve'
+        env:
+           ARM_CLIENT_ID: ${{ secrets.client_id }}
+           ARM_SUBSCRIPTION_ID: ${{ secrets.subscription_id }}
+           ARM_TENANT_ID: ${{ secrets.tenant_id }}
+           ARM_CLIENT_SECRET: ${{ secrets.client_secret }}
+          
+
+        
+ 
+
+
+
