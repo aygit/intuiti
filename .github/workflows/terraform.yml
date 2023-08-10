@@ -50,7 +50,7 @@ jobs:
       - name: terraform Plan
         id: plan
         #run: 'terraform plan -var-file="terraf/terraform.tfvars" -out=out.tfplan'
-        run: terraform plan -var-file=terraform.tfvars 
+        run: terraform plan -var-file="terraform/terraform.tfvars" 
        # working-directory: terraf
         env:
            ARM_CLIENT_ID: ${{ secrets.client_id }}
