@@ -8,11 +8,11 @@ on:
 jobs:
   terraform:
     runs-on: ubuntu-latest
-    name: packer
+    name: terraform-build
 
     defaults:
      run:
-      working-directory: terraf
+      working-directory: terraform
 
     steps:
       - name: Checkout Repository
